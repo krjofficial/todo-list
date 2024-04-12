@@ -7,19 +7,23 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <input id="task-title" type="text"/>
+  <button onclick="addTask()">Add Task</button>
   <script>
 
-
-    function addTask(taskTitle) {
+    let taskList = [ 'sabzi' ];
+ 
+    taskList.forEach(function (taskTitle) {
       let element = document.createElement('div');
-      element.innerText =  taskTitle;
+      element.innerText = taskTitle;
       document.body.appendChild(element);
+    });
+
+    function addTask() {
+      let taskTitle = document.getElementById('task-title').value;
+      taskList.push(taskTitle);
     }
-
-    addTask('do this');
-    addTask('do that');
-    addTask('do that as well');
-
+    
   </script>
 </body>
 </html>
