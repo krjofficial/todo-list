@@ -5,13 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo-List</title>
   <link rel="stylesheet" href="style.css">
-  <script src="todo.js" defer></script>
 </head>
 <body>
-  <form id="task-form">
-    <input type="text" id="task-input" placeholder="Add a task...">
-    <button type="submit">Add to Routine</button>
-    <div id="task-list"></div>
-  </form>
+  <script>
+
+
+    function addTask(taskTitle) {
+      let element = document.createElement('div');
+      element.innerText =  taskTitle;
+      document.body.appendChild(element);
+    }
+
+    addTask('do this');
+    addTask('do that');
+    addTask('do that as well');
+
+  </script>
 </body>
 </html>
