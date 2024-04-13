@@ -8,20 +8,53 @@
 </head>
 <body>
   <input id="task-title" type="text"/>
+  <input id="date-picker" type="date"/>
   <button onclick="addTask()">Add Task</button>
+
+  <div id="task-list"></div>
   <script>
 
-    let taskList = [ 'do this' ];
+    const taskList = [{
+      title: 'do this',
+      dueDate: '04-01-2015'
+    }];
  
-    taskList.forEach(function (taskTitle) {
-      let element = document.createElement('div');
-      element.innerText = taskTitle;
-      document.body.appendChild(element);
-    });
+    render();
 
     function addTask() {
-      let taskTitle = document.getElementById('task-title').value;
-      taskList.push(taskTitle);
+      const taskTitleInput = document.getElementById('task-title');
+      const taskTitle = taskTitleInput.value;
+      const datePicker = document.getElementById('date-picker');
+      const dueDate = datePicker.value;
+      taskList.push({
+        title: taskTitle,
+        dueDate: dueDate
+      });
+      render();
+    }
+
+    function deleteTask(){
+
+    }
+
+    function render () {
+      // Clearing the task list
+      const taskListContainer = document.getElementById('task-list');
+      taskListContainer.innerHTML = '';
+
+      // Displaying the updated task list
+      taskList.forEach(function (task) {
+        const element = document.createElement('div');
+        element.innerText = task.title + ' ' + task.dueDate;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete Task';
+        deleteButton.style = "margin-left: 12px;";
+        deleteButton.onclick = deleteTask;
+        element.appendChild(deleteButton);
+
+        taskListContainer.appendChild(element);
+      });
     }
     
   </script>
