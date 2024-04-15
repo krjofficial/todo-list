@@ -7,56 +7,133 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- // View Section 1 -->
   <input id="task-title" type="text"/>
   <input id="date-picker" type="date"/>
   <button onclick="addTask()">Add Task</button>
 
   <div id="task-list"></div>
+  <!-- End of View Section 1 -->
+
   <script>
 
-    const taskList = [{
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Model Section
+
+    let taskList = [{
       title: 'do this',
-      dueDate: '04-01-2015'
+      dueDate: '04-01-2015',
+      id: 'id1'
+    }, {
+      title: 'do that',
+      dueDate: '04-01-2015',
+      id: 'id2'
+    }, {
+      title: 'do this as well',
+      dueDate: '04-01-2015',
+      id: 'id3'
     }];
  
+    //Creates a new Task
+
+    function createTask(taskTitle, dueDate) {
+
+      // the id needs to be a string otherwise it'll cause type error
+      // to do this just add empty string to the required assignment
+      const id = '' + new Date().getTime();
+      taskList.push({
+        title: taskTitle,
+        dueDate: dueDate,
+        id: id
+      });
+
+    }
+    //Delete an existing Task
+
+    function removeTask(idToDelete) {
+      taskList = taskList.filter(function(task) {
+        return task.id !== idToDelete;
+      });
+    }
+
+    // End of Model Section
+
+
+
+
+
     render();
 
+
+
+
+
+    // Controller Section 
     function addTask() {
       const taskTitleInput = document.getElementById('task-title');
       const taskTitle = taskTitleInput.value;
       const datePicker = document.getElementById('date-picker');
       const dueDate = datePicker.value;
-      taskList.push({
-        title: taskTitle,
-        dueDate: dueDate
-      });
+
+      createTask(taskTitle, dueDate);
+
       render();
     }
 
-    function deleteTask(){
+    function deleteTask(event) {
+      const deleteButton = event.target;
+      const idToDelete = deleteButton.id;
 
+      removeTask(idToDelete);
+
+      render();
     }
 
-    function render () {
+    // End of Controller Section
+
+
+
+
+
+
+
+
+    // View Section 2
+    function render() {
       // Clearing the task list
       const taskListContainer = document.getElementById('task-list');
       taskListContainer.innerHTML = '';
 
       // Displaying the updated task list
-      taskList.forEach(function (task) {
+      taskList.forEach(function(task) {
         const element = document.createElement('div');
         element.innerText = task.title + ' ' + task.dueDate;
 
         const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'Delete Task';
-        deleteButton.style = "margin-left: 12px;";
+        deleteButton.textContent = 'Delete Task';
+        deleteButton.style.marginLeft = '12px';
         deleteButton.onclick = deleteTask;
+        deleteButton.id = task.id; // Set the delete button's ID to match the task ID
         element.appendChild(deleteButton);
 
         taskListContainer.appendChild(element);
       });
     }
     
+    // End of View Section 2
   </script>
 </body>
 </html>
